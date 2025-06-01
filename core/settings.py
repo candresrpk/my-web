@@ -101,7 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es-es'
 
-TIME_ZONE = 'Bogota/America'
+TIME_ZONE = 'America/Bogota'
 
 USE_I18N = True
 
@@ -112,6 +112,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_URL = BASE_DIR.joinpath('static')
+STATICFILES_DIRS = [
+    BASE_DIR.joinpath('static')
+]
+STATIC_ROOT = BASE_DIR.joinpath('static_root')
+MEDIA_ROOT = BASE_DIR.joinpath('media_root')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
