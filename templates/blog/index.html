@@ -1,0 +1,166 @@
+{% extends '../base.html' %}
+
+
+{% block content %}
+
+<style>
+  /* Botón compacto amistoso */
+  .btn-ver-mas {
+    background-color: #28a745;
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1.2rem;
+    border-radius: 1.25rem;
+    box-shadow: 0 0.3rem 0.5rem rgba(40, 167, 69, 0.4);
+    border: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-ver-mas:hover, .btn-ver-mas:focus {
+    background-color: #218838;
+    box-shadow: 0 0.5rem 1rem rgba(33, 136, 56, 0.6);
+    color: white;
+    text-decoration: none;
+  }
+
+  /* Fondo suave para la sección de bienvenida */
+  .highlight-section {
+    background-color: #e6f4ea;
+    border-radius: 1rem;
+    padding: 2rem 1.5rem;
+    margin-bottom: 3rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2c3e50;
+  }
+
+  /* Tarjetas top preguntas estilo developer */
+  .top-card {
+    min-height: 220px;
+    border-radius: 1.5rem;
+    box-shadow: 0 0.7rem 1.2rem rgba(0, 128, 0, 0.15);
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1.4rem;
+    font-family: 'Fira Code', monospace, monospace;
+    text-align: center;
+    transition: transform 0.25s ease;
+  }
+  .top-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 1rem 1.8rem rgba(0, 128, 0, 0.3);
+  }
+  .top-card h5 {
+    font-weight: 700;
+    color: #19692c;
+    margin-bottom: 0.3rem;
+  }
+  .top-card p {
+    font-size: 0.9rem;
+    color: #3a5d3a;
+    margin-bottom: 0.8rem;
+    flex-grow: 1;
+  }
+  .top-card .views {
+    font-size: 0.85rem;
+    color: #4b7f52;
+    margin-bottom: 1rem;
+  }
+
+  /* Tarjetas grandes preguntas estilo dev */
+  .large-card {
+    border-radius: 1.5rem;
+    box-shadow: 0 0.8rem 1.5rem rgba(34, 139, 34, 0.15);
+    background-color: #ffffff;
+    font-family: 'Fira Code', monospace, monospace;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .large-card:hover {
+    box-shadow: 0 1.2rem 2rem rgba(34, 139, 34, 0.3);
+    transform: translateY(-7px);
+  }
+  .large-card .card-body {
+    padding: 1.8rem 2rem;
+  }
+  .large-card h4 {
+    font-weight: 700;
+    color: #1b4d1b;
+    margin-bottom: 0.75rem;
+  }
+  .large-card p {
+    color: #3a5d3a;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .large-card .views {
+    font-size: 0.9rem;
+    color: #5a7d5a;
+    margin-top: 1rem;
+  }
+
+</style>
+
+<div class="container py-5">
+
+  <!-- Título principal -->
+  <div class="text-center mb-5">
+    <h1 class="display-4 fw-bold" style="font-family: 'Fira Code', monospace;">Top Preguntas</h1>
+  </div>
+
+  <!-- Sección: Top 3 preguntas más vistas -->
+  <div class="row g-4 mb-5 justify-content-center">
+    {% for question in top_questions %}
+      <div class="col-md-4">
+        <div class="top-card shadow-sm rounded-lg">
+          <h5>{{ question.title }}</h5>
+          <p>{{ question.body|truncatechars:120 }}</p>
+          <div class="views">{{ question.views }} vistas</div>
+          <a href="#" class="btn-ver-mas mx-auto mt-auto">
+            Ver más
+          </a>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-center">No hay preguntas destacadas aún.</p>
+    {% endfor %}
+  </div>
+
+  <!-- Subtítulo + bienvenida -->
+  <div class="highlight-section text-center mb-5">
+    <h5 class="text-success mb-3" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+      No hay malas preguntas, solo echa un ojo y aprende un poco de todo
+    </h5>
+    <p style="font-size: 1.1rem;">
+      Bienvenido a mi blog donde encontrarás preguntas y respuestas a problemas comunes... o poco comunes de los devs.
+    </p>
+  </div>
+
+  <!-- Sección: Todas las preguntas -->
+  <div class="row justify-content-center">
+    {% for question in questions %}
+      <div class="col-md-8 mb-4">
+        <div class="card large-card shadow rounded-lg">
+          <div class="card-body">
+            <h4>{{ question.title }}</h4>
+            <p>{{ question.body|truncatechars:200 }}</p>
+            <div class="views">{{ question.views }} vistas</div>
+          </div>
+          <div class="p-3 text-center">
+            <a href="#" class="btn-ver-mas">
+              Ver más
+            </a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-center">Aún no hay preguntas publicadas.</p>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
