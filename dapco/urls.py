@@ -5,4 +5,5 @@ app_name = 'dapco'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('create', views.createEncuestView, name='create'),
 ]

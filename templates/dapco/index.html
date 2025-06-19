@@ -3,27 +3,105 @@
 
 {% block content %}
 
+<style>
 
-<div class="gradient-wrapper">
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: white;
+    transition: transform 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+  }
+
+  .card.draft {
+    opacity: 0.5;
+    backdrop-filter: blur(4px);
+  }
+
+  .status-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 2rem 0 1rem;
+    color: #155724;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .hero-section {
+    position: relative;
+    z-index: 1;
+  }
+
+  a{
+    text-decoration: none;
+    color: #fff;
+  }
+
+</style>
+
   <div class="hero-section">
-    <div class="hero-top-circle"></div>
-    <div class="container">
-      <h1 class="display-6 fw-bold">Comienza ahora a realizar tus encuestas de popularidad</h1>
-      <p class="lead mt-3">Haz clic abajo para iniciar</p>
-      <a href="#" class="btn btn-light btn-lg mt-3">Comienza aquí</a>
-    </div>
+    
+    {% if encuestas %}
+      <div class="container">
+        <div class="container text-center mb-5">
+          <h1 class="display-5 fw-bold text-success">Estas son tus encuestas disponibles</h1>
+          <p class="lead">Consulta tus encuestas publicadas y en borrador</p>
+          <a href="{% url "dapco:create" %}" class="btn btn-outline-success">Crea otra encuesta</a>
+
+        </div>
+
+        <!-- Publicadas -->
+        <div class="status-title">📢 Publicadas</div>
+        <div class="card-grid">
+          {% for encuesta in encuestas %}
+            {% if encuesta.status == 'PB' %}
+              <a href="#" class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{ encuesta.encuesta }}</h5>
+                </div>
+              </a>
+            {% endif %}
+          {% empty %}
+            <p>No hay encuestas publicadas.</p>
+          {% endfor %}
+
+        </div>
+
+        <!-- Borradores -->
+        <div class="status-title">📝 Borradores</div>
+        <div class="card-grid">
+          {% for encuesta in encuestas %}
+            {% if encuesta.status == 'DF' %}
+              <div class="card draft">
+                <div class="card-body">
+                  <h5 class="card-title">{{ encuesta.encuesta }}</h5>
+                </div>
+              </div>
+            {% endif %}
+          {% empty %}
+            <p>No hay borradores.</p>
+          {% endfor %}
+        </div>
+
+      </div>
+    {% else %}
+      <div class="container text-center">
+        <h1 class="display-6 fw-bold">Comienza ahora a realizar tus encuestas de popularidad</h1>
+        <p class="lead mt-3">Haz clic abajo para iniciar</p>
+        <a href="{% url "portafolios:index" %}" class="btn btn-light btn-lg mt-3">Comienza aquí</a>
+      </div>
+    {% endif %}
   </div>
 
-  <div class="container card-grid">
-    <div class="custom-card">
-      <div class="card-body"><h5>Encuesta Sangil</h5></div>
-    </div>
-    <div class="custom-card">
-      <div class="card-body"><h5>Medellín</h5></div>
-    </div>
-    <div class="custom-card">
-      <div class="card-body"><h5>Cúcuta</h5></div>
-    </div>
-  </div>
-</div>
 {% endblock %}

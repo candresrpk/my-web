@@ -20,7 +20,7 @@ class Tag(models.Model):
 class Project(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, through='ProjectTag')
     slug = models.SlugField(max_length=200, unique=True)
     image = models.ImageField(upload_to='portafolio/images')
     git_url = models.URLField(blank=True)

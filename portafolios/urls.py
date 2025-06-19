@@ -6,4 +6,5 @@ app_name = 'portafolios'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('create', views.createView, name='create'),
 ]
